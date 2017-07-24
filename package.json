@@ -1,14 +1,13 @@
 {
   "name": "aws-cognito-auth",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sample on how to use Cognito for authenticate an user between AWS_IAM.",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
     "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Vincenzo Moccia",
   "license": "ISC",
   "devDependencies": {
     "json-loader": "^0.5.4",
