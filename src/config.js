@@ -1,6 +1,7 @@
 "use strict";
 
-const  envs = require('envs');
+const envs = require('envs');
+
 const region = 'eu-west-1';
 
 const authenticationData =  {
@@ -10,7 +11,7 @@ const authenticationData =  {
 
 const poolData = {
     UserPoolId : envs('USER_POOL_ID', 'eu-west-1_*********'), // Your user pool id here
-    ClientId : envs('CLIENT_ID','47ksvk8cl9d6455ek*********'), // Your client id here
+    ClientId : envs('CLIENT_ID','*************************'), // Your client id here
 };
 
 const cognitoIdpUrl = 'cognito-idp.'+ region +'.amazonaws.com/'; //EU-WEST-1;
@@ -27,13 +28,3 @@ const aws =  {
 module.exports = {
     aws: aws
 };
-
-
-
-
-
-
-
-
-
-

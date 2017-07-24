@@ -5,21 +5,21 @@ let AWSCognito = require('amazon-cognito-identity-js');
 let AWS = require('aws-sdk');
 let jwtDecode = require('jwt-decode');
 
-var userPool = new AWSCognito.CognitoUserPool(config.poolData);
+let userPool = new AWSCognito.CognitoUserPool(config.poolData);
 
-var userData = {
+let userData = {
     Username : config.authenticationData.Username,
     Pool : userPool
 };
 
-var cognitoUser = new AWSCognito.CognitoUser(userData);
-var authenticationDetails = new AWSCognito.AuthenticationDetails(config.authenticationData);
+let cognitoUser = new AWSCognito.CognitoUser(userData);
+let authenticationDetails = new AWSCognito.AuthenticationDetails(config.authenticationData);
 
 cognitoUser.authenticateUser(authenticationDetails, {
     onSuccess: function (result) {
         console.log('Access token + ' + result.getAccessToken().getJwtToken());
 
-        var idpKey =  config.cognitoIdpUrl +  config.poolData.UserPoolId;
+        let idpKey =  config.cognitoIdpUrl +  config.poolData.UserPoolId;
         let logins = {};
         logins[idpKey] = result.getIdToken().getJwtToken();
 
@@ -30,7 +30,7 @@ cognitoUser.authenticateUser(authenticationDetails, {
             Logins : logins
         });
 
-        var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
+        let cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
         cognitoidentityserviceprovider.getUser({ AccessToken: result.getAccessToken().getJwtToken()}, function(err, data) {
 
             if (err) console.log(err, err.stack); // an error occurred
@@ -48,7 +48,7 @@ cognitoUser.authenticateUser(authenticationDetails, {
             };
         });
 
-        var cognitoUser = userPool.getCurrentUser();
+        let cognitoUser = userPool.getCurrentUser();
 
         if(cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {
@@ -58,12 +58,12 @@ cognitoUser.authenticateUser(authenticationDetails, {
                 }
                 console.log('session validity: ' + session.isValid());
 
-                var sessionIdInfo = jwtDecode(session.getIdToken().jwtToken);
+                let sessionIdInfo = jwtDecode(session.getIdToken().jwtToken);
                 console.log(sessionIdInfo['cognito:groups']);
             })
         };
         // Instantiate aws sdk service objects now that the credentials have been updated.
-        // example: var s3 = new AWS.S3();
+        // example: let s3 = new AWS.S3();
 
     },
 
@@ -73,7 +73,8 @@ cognitoUser.authenticateUser(authenticationDetails, {
 
     newPasswordRequired: function(userAttributes, requiredAttributes) {
         console.log("PASSWORD_CHALLANGE")
-        cognitoUser.completeNewPasswordChallenge("Password123", {}, this)
+        //confirm the same password
+        cognitoUser.completeNewPasswordChallenge(config.authenticationData.Password, {}, this)
     }
 
 });
