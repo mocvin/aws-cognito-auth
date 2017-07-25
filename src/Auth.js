@@ -72,7 +72,8 @@ cognitoUser.authenticateUser(authenticationDetails, {
     },
 
     newPasswordRequired: function(userAttributes, requiredAttributes) {
-        console.log("PASSWORD_CHALLANGE")
+        console.log("PASSWORD_CHALLANGE");
+
         //confirm the same password
         cognitoUser.completeNewPasswordChallenge(config.authenticationData.Password, {}, this)
     }
